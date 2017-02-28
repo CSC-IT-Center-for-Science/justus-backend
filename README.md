@@ -1,17 +1,19 @@
-       _ _   _  ____ _____ __  _  ____
-      | | | | |/ __ |_   _| | | |/ __ |
-      | | | | |\__ _  | | | | | |\__ _
-   _  | | | | |_  \ \ | | | | | |_  \ \
-  | |_| | |_| | |_| | | | | |_| | |_| |
-   \___/ \___/ \___/  \_/  \___/ \___/
-    | |__  __ _ __| |_____ _ _  __| |
-    | '_ \/ _` / _| / / -_) ' \/ _` |
-    |_.__/\__,_\__|_\_\___|_||_\__,_|
-          :: JUSTUS Backend ::
+         _ _   _  ____ _____ __  _  ____
+        | | | | |/ __ |_   _| | | |/ __ |
+        | | | | |\__ _  | | | | | |\__ _
+     _  | | | | |_  \ \ | | | | | |_  \ \
+    | |_| | |_| | |_| | | | | |_| | |_| |
+     \___/ \___/ \___/  \_/  \___/ \___/
+      | |__  __ _ __| |_____ _ _  __| |
+      | '_ \/ _` / _| / / -_) ' \/ _` |
+      |_.__/\__,_\__|_\_\___|_||_\__,_|
+            :: JUSTUS Backend ::
 
-# Building ja development environment installation - How-to
+# Buildaus ja kehitysympäristön asennus - How-to
 
-## Requirements
+## Alkuvalmistelut
+
+Koneelle täytyy asentaa: 
 
 * Java 8
 * Maven (3.3.1 tai uudempi)
@@ -121,9 +123,11 @@ Tällöin asetukset ovat hardkoodattuina paketin sisällä, eikä ulkoista konfi
     
    Manuaalinen konffiesimerkki:
     
-    java -jar justus-backend.jar --server.port=8080 --db.host=192.168.1.165 --db.pass=appaccount --spring.profiles.active=prod
+    $ java -jar justus-backend.jar --server.port=8080 --db.host=192.168.1.165 --db.pass=appaccount --spring.profiles.active=prod
 
 ## Julkaisut
+
+**TODO** Projekti kopioitu ja release-käytäntö ei välttämättä toimi!
 
 Käytössä Maven release plugin. Plugin kysyy ajettaessa tehtävää julkaisuversiota (esim 1.1.2), ja tämän jälkeistä 
 snapshot-versiota (esim 1.2.0-SNAPHOT). Plugin hoitaa tagien tekemisen ja puskemisen gittiin automaattisesti, joten
