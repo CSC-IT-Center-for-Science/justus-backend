@@ -1,0 +1,8 @@
+#platform specifics
+dbhost: POSTGRES_IP
+dbport: 5432
+baseUrl: https://localhost:3000/
+
+spring:
+    datasource:
+        url: jdbc:postgresql://${dbhost}:${dbport}/
