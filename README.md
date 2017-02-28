@@ -1,13 +1,13 @@
-     _ _   _  ____ _____ __  _  ____
-    | | | | |/ __ |_   _| | | |/ __ |
-    | | | | |\__ _  | | | | | |\__ _
- _  | | | | |_  \ \ | | | | | |_  \ \
-| |_| | |_| | |_| | | | | |_| | |_| |
- \___/ \___/ \___/  \_/  \___/ \___/
-  | |__  __ _ __| |_____ _ _  __| |
-  | '_ \/ _` / _| / / -_) ' \/ _` |
-  |_.__/\__,_\__|_\_\___|_||_\__,_|
-        :: JUSTUS Backend ::
+       _ _   _  ____ _____ __  _  ____
+      | | | | |/ __ |_   _| | | |/ __ |
+      | | | | |\__ _  | | | | | |\__ _
+   _  | | | | |_  \ \ | | | | | |_  \ \
+  | |_| | |_| | |_| | | | | |_| | |_| |
+   \___/ \___/ \___/  \_/  \___/ \___/
+    | |__  __ _ __| |_____ _ _  __| |
+    | '_ \/ _` / _| / / -_) ' \/ _` |
+    |_.__/\__,_\__|_\_\___|_||_\__,_|
+          :: JUSTUS Backend ::
 
 # Building ja development environment installation - How-to
 
@@ -103,7 +103,7 @@ oleville konfiguraatioille.
 
 Voit rakentaa paketit ajamalla:
 
-mvn package -P demo (tai prod profiililla)
+    $ mvn package -P demo (tai prod profiililla)
 
 Jos käytät samalla paketin ulkopuolista konfiguraatiota. Mikäli haluat konffit paketin sisään, anna ne mukaan paketoinnissa.
 
