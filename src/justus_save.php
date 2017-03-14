@@ -14,9 +14,13 @@ if (isset($_SERVER['REQUEST_METHOD'])) {
 
 header('Content-Type: application/json; charset=utf-8');
 
-
 // get the HTTP method, path and body of the request
 $method = $_SERVER['REQUEST_METHOD'];
+if ($method=='OPTIONS') {
+  http_response_code(200);
+  exit;
+}
+
 $request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
 $input = json_decode(file_get_contents('php://input'),true);
 
