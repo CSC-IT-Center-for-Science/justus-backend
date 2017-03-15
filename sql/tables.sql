@@ -31,7 +31,7 @@ CREATE TABLE julkaisu
   doitunniste text,
   pysyvaverkkoosoite text,
   avoinsaatavuus text,
-  julkaisurinnakkaistallenettu integer,
+  julkaisurinnakkaistallennettu integer,
   rinnakkaistallenetunversionverkkoosoite text,
   jufotunnus text,
   jufoluokitus text,
