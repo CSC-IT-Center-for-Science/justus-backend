@@ -135,3 +135,27 @@ WITH (
 );
 ALTER TABLE alayksikko
   OWNER TO appaccount;
+
+
+
+-- Table: status
+
+-- DROP TABLE status;
+
+CREATE TABLE status
+(
+  id bigserial NOT NULL,
+  julkaisuid bigint NOT NULL,
+  julkaisuntila character varying(5) NOT NULL DEFAULT 0,
+  username character varying(100),
+  modified timestamp without time zone NOT NULL DEFAULT now(),
+  CONSTRAINT status_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_julkaisu FOREIGN KEY (julkaisuid)
+      REFERENCES julkaisu (id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE status
+  OWNER TO appaccount;
