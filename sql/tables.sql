@@ -35,7 +35,7 @@ CREATE TABLE julkaisu
   rinnakkaistallenetunversionverkkoosoite text,
   jufotunnus text,
   jufoluokitus text,
-  status character varying(5) NOT NULL DEFAULT 0,
+  status character varying(5),
   username character varying(100),
   modified timestamp without time zone NOT NULL DEFAULT now(),
   CONSTRAINT julkaisu_pkey PRIMARY KEY (id)

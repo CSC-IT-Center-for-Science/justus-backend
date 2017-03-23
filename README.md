@@ -10,3 +10,14 @@
             :: JUSTUS backend ::
 
 **TODO**
+
+## Requirements
+
+### Server side
+
+* Web server apache or nginx or such
+* php
+  * simplesamlphp
+  * php-xml
+  * php-mcrypt
+
