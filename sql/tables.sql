@@ -37,7 +37,7 @@ CREATE TABLE julkaisu
   jufoluokitus text,
   status character varying(5),
   username character varying(100),
-  modified timestamp without time zone NOT NULL DEFAULT now(),
+  modified timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT julkaisu_pkey PRIMARY KEY (id)
 )
 WITH (
