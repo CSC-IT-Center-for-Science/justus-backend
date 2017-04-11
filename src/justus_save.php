@@ -38,8 +38,8 @@ $table = preg_replace('/[^a-z0-9_]+/i','',array_shift($request));
 $key = array_shift($request)+0;
 
 // escape the columns and values from the input object
-$columns = preg_replace('/[^a-z0-9_]+/i','',array_keys($input));
-$values = array_map(function ($value) use ($dbconn) {
+$columns = !$input ? null : preg_replace('/[^a-z0-9_]+/i','',array_keys($input));
+$values = !$input ? null : array_map(function ($value) use ($dbconn) {
   if ($value===null) return null;
   // escape str
   $value = stripslashes($value);
@@ -89,7 +89,7 @@ if (!$result) {
 if ($method == 'GET') {
   if (!$key) echo '[';
   for ($i=0;$i<pg_num_rows($result);$i++) {
-    echo ($i>0?',':'').json_encode(pg_fetch_object($result));
+    echo ($i>0?',':'').json_encode(pg_fetch_object($result)); // would be nice but breaks things. option: JSON_NUMERIC_CHECK
   }
   if (!$key) echo ']';
 } elseif ($method == 'POST') {
