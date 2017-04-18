@@ -89,7 +89,11 @@ if (!$result) {
 if ($method == 'GET') {
   if (!$key) echo '[';
   for ($i=0;$i<pg_num_rows($result);$i++) {
-    echo ($i>0?',':'').json_encode(pg_fetch_object($result)); // would be nice but breaks things. option: JSON_NUMERIC_CHECK
+    if ($table=='uijulkaisut') {
+      echo ($i>0?',':'').pg_fetch_result($result,$i,'row_to_json');
+    } else {
+      echo ($i>0?',':'').json_encode(pg_fetch_object($result)); // would be nice but breaks things. option: JSON_NUMERIC_CHECK
+    }
   }
   if (!$key) echo ']';
 } elseif ($method == 'POST') {
