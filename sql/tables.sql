@@ -1,4 +1,4 @@
-﻿-- Table: julkaisu
+-- Table: julkaisu
 
 -- DROP TABLE julkaisu;
 
@@ -24,20 +24,21 @@ CREATE TABLE julkaisu
   kustantaja text,
   julkaisunkustannuspaikka text,
   julkaisunkieli text,
-  julkaisunkansainvalisyys integer,
+  julkaisunkansainvalisyys text,
   julkaisumaa text,
-  kansainvalinenyhteisjulkaisu integer,
-  yhteisjulkaisuyrityksenkanssa integer,
+  kansainvalinenyhteisjulkaisu text,
+  yhteisjulkaisuyrityksenkanssa text,
   doitunniste text,
   pysyvaverkkoosoite text,
   avoinsaatavuus text,
-  julkaisurinnakkaistallennettu integer,
-  rinnakkaistallenetunversionverkkoosoite text,
+  julkaisurinnakkaistallennettu text,
+  rinnakkaistallennetunversionverkkoosoite text,
   jufotunnus text,
   jufoluokitus text,
   julkaisuntila character varying(5),
   username character varying(100),
   modified timestamp with time zone NOT NULL DEFAULT now(),
+  --julkaisuid character varying(20),
   CONSTRAINT julkaisu_pkey PRIMARY KEY (id)
 )
 WITH (
@@ -45,8 +46,6 @@ WITH (
 );
 ALTER TABLE julkaisu
   OWNER TO appaccount;
-
-
 
 
 -- Table: avainsana
@@ -70,7 +69,6 @@ ALTER TABLE avainsana
   OWNER TO appaccount;
 
 
-
 -- Table: tieteenala
 
 -- DROP TABLE tieteenala;
@@ -91,9 +89,6 @@ WITH (
 );
 ALTER TABLE tieteenala
   OWNER TO appaccount;
-
-
-
 
 
 -- Table: organisaatiotekija
