@@ -35,7 +35,17 @@ $dbconn = pg_connect(
 
 // retrieve the table and key from the path
 $table = preg_replace('/[^a-z0-9_]+/i','',array_shift($request));
-$key = array_shift($request)+0;
+//$key = array_shift($request)+0;
+$key = array_shift($request);
+// extra: get by other (for ex. foreign key) column:
+$col = "id";
+if (count($request)>0) {
+  $col = $key;
+  $key = array_shift($request)+0;
+} else {
+  $key = $key+0; // make it numeric (used to be above)
+}
+//echo "table: $table, col: $col, key: $key\n";
 
 // escape the columns and values from the input object
 $columns = !$input ? null : preg_replace('/[^a-z0-9_]+/i','',array_keys($input));
@@ -63,16 +73,16 @@ for ($i=0;$i<count($columns);$i++) {
 // create SQL based on HTTP method
 switch ($method) {
   case 'GET':
-    $sql = "select * from \"$table\"".($key?" WHERE id=$key":'');
+    $sql = "select * from \"$table\"".($key?" WHERE $col=$key":'');
     break;
   case 'PUT':
-    $sql = "update \"$table\" set $set where id=$key";
+    $sql = "update \"$table\" set $set where $col=$key";
     break;
   case 'POST':
     $sql = "insert into \"$table\" ($sqlcolumns) values ($sqlvalues) returning id";
     break;
   case 'DELETE':
-    $sql = "delete from \"$table\" where id=$key";
+    $sql = "delete from \"$table\" where $col=$key";
     break;
 }
 
