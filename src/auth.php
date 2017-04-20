@@ -1,10 +1,11 @@
-<?php
-$user = "";
+{<?php
+$uid = "";
 if (array_key_exists("shib-uid",$_SERVER)) {
-  $user = $_SERVER["shib-uid"];
+  $uid = $_SERVER["shib-uid"];
 }
-if (!$user && array_key_exists("shib-mail",$_SERVER)) {
-  $user = $_SERVER["shib-mail"];
+$mail = "";
+if (array_key_exists("shib-mail",$_SERVER)) {
+  $mail = $_SERVER["shib-mail"];
 }
 
 $name = "";
@@ -36,7 +37,9 @@ if (array_key_exists("shib-group",$_SERVER)) {
   }
 }
 ?>
-{"name": "<?php print($name); ?>"},
-{"user": "<?php print($user); ?>"},
-{"domain": "<?php print($domain); ?>"},
-{"role": "<?php if($justusrole){ print($justusrole); } ?>"}
+  "name": "<?php print($name); ?>",
+  "mail": "<?php print($mail); ?>",
+  "uid": "<?php print($uid); ?>",
+  "domain": "<?php print($domain); ?>",
+  "role": "<?php if($justusrole){ print($justusrole); } ?>"
+}
