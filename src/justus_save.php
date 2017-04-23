@@ -41,7 +41,7 @@ $key = array_shift($request);
 $col = "id";
 if (count($request)>0) {
   $col = $key;
-  $key = array_shift($request)+0;
+  $key = "'".array_shift($request)."'";
 } else {
   $key = $key+0; // make it numeric (used to be above)
 }
