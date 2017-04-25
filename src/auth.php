@@ -19,14 +19,15 @@ if (array_key_exists("shib-group",$_SERVER)) {
   $groups = explode(";",$_SERVER["shib-group"]);
   //print_r($groups);
   for ($i=0; $i<count($groups); $i++) {
-    // new, should use
+    // a role for "owner"
     if (strpos($groups[$i],'justus#group-admins')!==false) {
+      $justusrole = "owner";
+    }
+    // a role for organizational admin
+    // - do we need group name from here?
+    if (!$justusrole && preg_match($groups[$i],'justus#([^;]*)-admins')==1) {
       $justusrole = "admin";
     }
-    // old. deprecated?
-    //if (strpos($groups[$i],'justus-owners')!==false) {
-    //  $justusrole = "owner ";
-    //}
     // todo: what will be the format? (justus#...?)
     if (!$justusrole && strpos($groups[$i],'justus')!==false) {
       $justusrole = "member";
