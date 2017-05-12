@@ -14,6 +14,7 @@ if (array_key_exists("shib-givenName",$_SERVER) && array_key_exists("shib-sn",$_
 }
 
 $domain = "";
+$organization = "";
 $justusrole = "";
 if (array_key_exists("shib-group",$_SERVER)) {
   $groups = explode(";",$_SERVER["shib-group"]);
@@ -28,12 +29,39 @@ if (array_key_exists("shib-group",$_SERVER)) {
     if (!$justusrole && preg_match($groups[$i],'justus#([^;]*)-admins')==1) {
       $justusrole = "admin";
     }
-    // todo: what will be the format? (justus#...?)
-    if (!$justusrole && strpos($groups[$i],'justus')!==false) {
-      $justusrole = "member";
-    }
-    if (strpos($groups[$i],'@')!==false) {
+    // mapping from allowed organizations here. defining membership.
+    if (strpos($groups[$i],'@')!==false && strpos($groups[$i],'@')==0) {
       $domain = $groups[$i];
+      $domorgmap = [
+        '@arcada.fi' => '02535',
+        '@centria.fi' => '02536',
+        '@diak.fi' => '02623',
+        '@haaga-helia.fi' => '10056',
+        '@humak.fi' => '02631',
+        '@jamk.fi' => '02504',
+        '@kamk.fi' => '02473',
+        '@karelia.fi' => '02469',
+        // nb! xamk may have 3 domains (mahd. kyamk.fi ja mamk.fi)
+        '@xamk.fi' => '10118', '@kyamk.fi' => '10118', '@mamk.fi' => '10118',
+        '@lamk.fi' => '02470',
+        '@laurea.fi' => '02629',
+        '@metropolia.fi' => '10065',
+        '@samk.fi' => '02507',
+        '@seamk.fi' => '02472',
+        '@tamk.fi' => '02630',
+        '@novia.fi' => '10066',
+        '@polamk.fi' => '02557',
+        // tutkimusorganisaatio
+        '@fmi.fi' => '4940015',
+        // nb! mml has 2 domains
+        '@nls.fi' => '4020217', '@maanmittauslaitos.fi' => '4020217',
+        // nb! unknown organization for admin org
+        '@csc.fi' => '00000'
+      ];
+      $organization = $domorgmap[$domain];
+      if (!$justusrole && $organization) {
+        $justusrole = "member";
+      }
     }
   }
 }
@@ -42,5 +70,6 @@ if (array_key_exists("shib-group",$_SERVER)) {
   "mail": "<?php print($mail); ?>",
   "uid": "<?php print($uid); ?>",
   "domain": "<?php print($domain); ?>",
+  "organization": "<?php print($organization); ?>",
   "role": "<?php if($justusrole){ print($justusrole); } ?>"
 }
