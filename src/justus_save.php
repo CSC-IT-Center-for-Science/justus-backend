@@ -11,7 +11,6 @@ if (isset($_SERVER['REQUEST_METHOD'])) {
 } else {
   echo json_encode($headers);
 }
-
 header('Content-Type: application/json; charset=utf-8');
 
 // get the HTTP method, path and body of the request
@@ -35,17 +34,15 @@ $dbconn = pg_connect(
 
 // retrieve the table and key from the path
 $table = preg_replace('/[^a-z0-9_]+/i','',array_shift($request));
-//$key = array_shift($request)+0;
 $key = array_shift($request);
 // extra: get by other (for ex. foreign key) column:
 $col = "id";
 if (count($request)>0) {
   $col = $key;
-  $key = "'".array_shift($request)."'";
+  $key = array_shift($request);
 } else {
-  $key = $key+0; // make it numeric (used to be above)
+  $key = $key+0; // force numeric for id
 }
-//echo "table: $table, col: $col, key: $key\n";
 
 // escape the columns and values from the input object
 $columns = !$input ? null : preg_replace('/[^a-z0-9_]+/i','',array_keys($input));
@@ -58,36 +55,42 @@ $values = !$input ? null : array_map(function ($value) use ($dbconn) {
   return $value;
 },array_values($input));
 
-// build the SET part of the SQL command (for UPDATE)
-// and sqlcolumns, and sqlvalues for INSERT
-$set = '';
-$sqlcolumns = '';
-$sqlvalues = '';
-for ($i=0;$i<count($columns);$i++) {
-  $set.=($i>0?',':'').$columns[$i].'=';
-  $set.=($values[$i]===null?'NULL':"'".$values[$i]."'");
-  $sqlcolumns.=($i>0?',':'').$columns[$i];
-  $sqlvalues.=($i>0?',':'').($values[$i]===null?'NULL':"'".$values[$i]."'");
-}
-
 // create SQL based on HTTP method
+$params=array();
 switch ($method) {
   case 'GET':
-    $sql = "select * from \"$table\"".($key?" WHERE $col=$key":'');
+    $sql = "select * from \"$table\"";
+    if ($key) {
+      $sql.= " WHERE $col=$1";
+      $params=array($key);
+    }
     break;
   case 'PUT':
-    $sql = "update \"$table\" set $set where $col=$key";
+    $sql = "update \"$table\" set ";
+    for ($i=0;$i<count($columns);$i++) {
+      if ($i>0) { $sql.=","; }
+      $sql.= $columns[$i]."="."$".($i+2); //leave room for id
+    }
+    $params=array_merge(array($key),$values);
+    $sql.= " where $col=$1";
     break;
   case 'POST':
-    $sql = "insert into \"$table\" ($sqlcolumns) values ($sqlvalues) returning id";
+    $sql = "insert into \"$table\" (".implode(",",$columns).") values (";
+    for ($i=0;$i<count($columns);$i++) {
+      if ($i>0) { $sql.=","; }
+      $sql.= '$'.($i+1);
+    }
+    $params=$values;
+    $sql.= ") returning id";
     break;
   case 'DELETE':
-    $sql = "delete from \"$table\" where $col=$key";
+    $sql = "delete from \"$table\" where $col=$1";
+    $params=array($key);
     break;
 }
 
 // excecute SQL statement
-$result = pg_query($dbconn,$sql);
+$result = pg_query_params($dbconn,$sql,$params);
 
 // die if SQL statement failed
 if (!$result) {
@@ -97,7 +100,6 @@ if (!$result) {
 
 // print results, insert id or affected row count
 if ($method == 'GET') {
-  //if (!$key)
   echo '[';
   for ($i=0;$i<pg_num_rows($result);$i++) {
     if ($table=='uijulkaisut') {
@@ -106,7 +108,6 @@ if ($method == 'GET') {
       echo ($i>0?',':'').json_encode(pg_fetch_object($result)); // would be nice but breaks things. option: JSON_NUMERIC_CHECK
     }
   }
-  //if (!$key)
   echo ']';
 } elseif ($method == 'POST') {
   echo pg_fetch_object($result)->id;
@@ -114,8 +115,7 @@ if ($method == 'GET') {
   echo pg_affected_rows($result);
 }
 
-// clean up
+// clean up & close
 pg_free_result($result);
-// close connection
 pg_close($dbconn);
 ?>

@@ -53,5 +53,4 @@ if (!function_exists('http_response_code')) {
     return $code;
   }
 }
-?>
-
+// included file, no new line at end! ?>
