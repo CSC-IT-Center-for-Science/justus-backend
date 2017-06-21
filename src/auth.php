@@ -26,7 +26,7 @@ if (array_key_exists("shib-group",$_SERVER)) {
     }
     // a role for organizational admin
     // - do we need group name from here?
-    if (!$justusrole && preg_match($groups[$i],'justus#([^;]*)-admins')==1) {
+    if ($justusrole!="owner" && preg_match($groups[$i],'justus#([^;]*)-admins')==1) {
       $justusrole = "admin";
     }
     // mapping from allowed organizations here. defining membership.
@@ -59,7 +59,7 @@ if (array_key_exists("shib-group",$_SERVER)) {
         '@csc.fi' => '00000'
       ];
       $organization = $domorgmap[$domain];
-      if (!$justusrole && $organization) {
+      if ($justusrole!="owner" && $justusrole!="admin" && $organization) {
         $justusrole = "member";
       }
     }
