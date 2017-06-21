@@ -26,7 +26,7 @@ if (array_key_exists("shib-group",$_SERVER)) {
     }
     // a role for organizational admin
     // - do we need group name from here?
-    if ($justusrole!="owner" && preg_match($groups[$i],'justus#([^;]*)-admins')==1) {
+    if ($justusrole!="owner" && preg_match("/justus#([^;]*)-admins/",$groups[$i])==1) {
       $justusrole = "admin";
     }
     // mapping from allowed organizations here. defining membership.
