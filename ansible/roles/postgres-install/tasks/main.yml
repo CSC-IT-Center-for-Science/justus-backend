@@ -1,0 +1,20 @@
+- name: Install PostgreSQL requirements
+  yum:
+    name: "python-psycopg2"
+    state: latest
+
+- name: Install PostgreSQL
+  yum: 
+    name: "{{ item }}-9.2.18-1.el7"
+    state: present
+  with_items:
+    - postgresql
+    - postgresql-libs
+    - postgresql-server
+    - postgresql-contrib
+
+- name: Create PostgreSQL database cluster
+  command: postgresql-setup initdb
+
+- name: Ensure the PostgreSQL service is running
+  service: name=postgresql state=started enabled=yes

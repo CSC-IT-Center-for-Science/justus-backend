@@ -1,0 +1,12 @@
+postgres:
+  server:
+    admin_user: postgres
+    admin_password: "{{ secrets.postgres.admin_password }}"
+  users:
+    application_user:
+      username: appaccount
+      password: "{{ secrets.postgres.application_user_password }}"
+  databases: 
+    application_database:
+      name: justus
+      owner: appaccount

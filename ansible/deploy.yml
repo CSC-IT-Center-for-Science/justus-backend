@@ -1,0 +1,11 @@
+- hosts: server
+  become: true
+  vars_files:
+    - "vars/common.yml"
+    - "vars/environments/{{ environment_id }}.yml"
+    - "{{ secrets_file_path }}"
+  roles:
+    # - os-setup
+    - php-install
+    - postgres-install
+    - postgres-data

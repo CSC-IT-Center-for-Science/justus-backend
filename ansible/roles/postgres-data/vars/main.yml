@@ -1,0 +1,3 @@
+sql_files_to_execute:
+  - tables.sql
+  - view-uijulkaisut.sql

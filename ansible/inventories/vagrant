@@ -1,0 +1,6 @@
+[server]
+127.0.0.1 ansible_connection=local ansible_ssh_user=vagrant
+
+[server:vars]
+environment_id=vagrant
+secrets_file_path="vars/default-secrets.yml"

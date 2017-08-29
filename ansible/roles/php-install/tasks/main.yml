@@ -1,0 +1,10 @@
+- name: Install PHP
+  yum: 
+    name: "{{ item }}-5.4.16-42.el7"
+    state: present
+  with_items:
+    - php
+    - php-cli
+    - php-common
+    - php-pdo
+    - php-pgsql
