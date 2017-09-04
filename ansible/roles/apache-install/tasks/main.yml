@@ -1,0 +1,10 @@
+- name: Install Apache
+  yum: 
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - httpd 
+    - mod_ssl
+
+- name: Ensure Apache is running
+  service: name=httpd state=restarted

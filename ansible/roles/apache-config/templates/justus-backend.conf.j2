@@ -1,0 +1,20 @@
+<Directory "/opt/justus-backend">
+  <Limit GET HEAD POST PUT DELETE OPTIONS>
+    Require all granted
+
+    Header set Access-Control-Allow-Origin "*"
+  </Limit>
+</Directory>
+
+<VirtualHost *:80>
+  ServerName 10.10.10.10
+
+  DocumentRoot "/opt/justus"
+  <Directory "/opt/justus">
+    Require all granted
+  </Directory>
+
+  RewriteEngine On
+  RewriteCond %{SERVER_NAME} =10.10.10.10
+  RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,QSA,R=permanent]
+</VirtualHost>

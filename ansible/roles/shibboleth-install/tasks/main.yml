@@ -1,0 +1,19 @@
+- name: Create self signed certificate
+  command: openssl req \-x509 -nodes -days 3650 -newkey rsa:2048 \
+    -subj "/C=FI/ST=/L=/O=/CN=localhost" \
+    -keyout /etc/pki/tls/private/shibboleth-selfsigned.key \
+    -out /etc/pki/tls/certs/shibboleth-selfsigned.crt
+
+- name: Add Shibboleth to yum repositories
+  yum_repository:
+    name: shibboleth
+    description: Shibboleth YUM repo
+    baseurl: http://download.opensuse.org/repositories/security://shibboleth/CentOS_7/
+
+- name: Install Shibboleth
+  yum: 
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - shibboleth
+    
