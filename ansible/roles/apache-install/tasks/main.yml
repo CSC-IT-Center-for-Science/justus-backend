@@ -6,5 +6,5 @@
     - httpd 
     - mod_ssl
 
-- name: Ensure Apache is running
-  service: name=httpd state=restarted
+- name: Ensure Apache is running  
+  service: name=httpd enabled=yes state=restarted

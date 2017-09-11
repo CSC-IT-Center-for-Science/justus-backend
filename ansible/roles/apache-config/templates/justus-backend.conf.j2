@@ -1,20 +1,23 @@
-<Directory "/opt/justus-backend">
-  <Limit GET HEAD POST PUT DELETE OPTIONS>
-    Require all granted
+ServerName localhost
+Listen 8080
+DocumentRoot "/opt/justus-backend"
+#Alias "/api" "/opt/justus-backend"
 
-    Header set Access-Control-Allow-Origin "*"
-  </Limit>
-</Directory>
+<VirtualHost *:8080>
+  ServerName localhost
 
-<VirtualHost *:80>
-  ServerName 10.10.10.10
+  #ErrorLog /var/log/httpd/justus-backend.log
 
-  DocumentRoot "/opt/justus"
-  <Directory "/opt/justus">
-    Require all granted
+  <Directory "/opt/justus-backend">
+    <Limit GET HEAD POST PUT DELETE OPTIONS>
+      Require all granted
+      Header set Access-Control-Allow-Origin "*"
+      Options FollowSymLinks
+      AllowOverride None
+    </Limit>
   </Directory>
-
-  RewriteEngine On
-  RewriteCond %{SERVER_NAME} =10.10.10.10
-  RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,QSA,R=permanent]
 </VirtualHost>
+
+{% if environment_id == "vagrant" %}
+  EnableSendfile Off
+{% endif %}

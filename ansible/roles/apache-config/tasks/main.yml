@@ -1,8 +1,39 @@
 
+- name: Clear existing application file struture
+  file: path={{ item }} state=absent
+  with_items:
+    - "{{ backend_sync_path }}"
+
+- name: "Symlink source-files from host machine to provide live editing"
+  file: 
+    src: "/vagrant/src" 
+    path: "{{ backend_sync_path }}" 
+    state: link
+    force: True
+  when: environment_id == "vagrant"
+
+- name: "Symlink source-files from host machine to provide live editing"
+  file: 
+    src: "/vagrant/src" 
+    path: "/var/www/html" 
+    state: link
+    force: True
+  when: environment_id == "vagrant"
+
 - name: Copy Apache configuration files
   template: src={{ item.src }} dest={{ item.dest }} mode={{ item.mode }} owner={{ item.owner }} group={{ item.owner }}
   with_items:
     - { src: justus-backend.conf.j2, dest: /etc/httpd/conf.d/justus-backend.conf, mode: "0644", owner: root }
 
+- name: Ensure file ownership
+  command: chown -cR apache:apache {{ backend_sync_path }}/
+  become: True
+
+- name: Ensure file permissions
+  command: chmod -cR "755" {{ backend_sync_path }}/
+
+- name: Set SELinux to allow http access
+  command: chcon -Rv --type=httpd_sys_content_t {{ backend_sync_path }}/
+
 - name: Restart Apache
-  service: name=httpd state=restarted
+  service: name=httpd enabled=yes state=restarted

@@ -3,4 +3,5 @@
 
 [server:vars]
 environment_id=vagrant
+backend_server_path=/opt/justus-backend
 secrets_file_path="vars/default-secrets.yml"

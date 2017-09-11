@@ -15,6 +15,7 @@
 
 - name: Create PostgreSQL database cluster
   command: postgresql-setup initdb
+  ignore_errors: True
 
 - name: Ensure the PostgreSQL service is running
   service: name=postgresql state=started enabled=yes
