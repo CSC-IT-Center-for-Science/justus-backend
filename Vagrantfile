@@ -7,6 +7,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.box = "centos/7"
   config.vm.network :private_network, ip: "10.10.10.10"
+  config.vm.network :forwarded_port, guest: 80, host: 8080
+  config.vm.network :forwarded_port, guest: 5432, host: 5432, auto_correct: true
   config.vm.hostname = "justus"
 
   # Disable the new default behavior introduced in Vagrant 1.7, to

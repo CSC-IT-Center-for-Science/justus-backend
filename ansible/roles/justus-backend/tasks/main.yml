@@ -1,0 +1,4 @@
+- name: Copy backend configuration files
+  template: src={{ item.src }} dest={{ item.dest }} mode={{ item.mode }} owner={{ item.owner }} group={{ item.owner }}
+  with_items:
+    - { src: justus-backend.ini.j2, dest: /etc/justus-backend.ini, mode: "0644", owner: root }

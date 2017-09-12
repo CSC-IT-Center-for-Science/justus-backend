@@ -1,0 +1,20 @@
+- name: Forward required ports
+  iptables:
+    chain: INPUT
+    match: state
+    protocol: "{{ item.protocol }}"
+    destination_port: "{{ item.port }}"
+    jump: ACCEPT
+    ctstate: NEW
+    state: present
+    comment: "{{ item.comment }}"
+  become: yes
+  with_items:
+    - { port: 8080, protocol: tcp, comment: "Open port 8080 for Apache" }
+    - { port: 5432, protocol: tcp, comment: "Open port 5432 for pgAdmin" }
+
+- name: Restart server to apply firewall rules
+  command: /sbin/shutdown -r
+  async: 0
+  poll: 0
+  ignore_errors: true

@@ -17,5 +17,16 @@
   command: postgresql-setup initdb
   ignore_errors: True
 
+- name: Copy PostgreSQL configuration files
+  template: src={{ item.src }} dest={{ item.dest }} mode={{ item.mode }} owner={{ item.owner }} group={{ item.group }}
+  with_items:
+    - { src: pg_hba.conf.j2, dest: /var/lib/pgsql/data/pg_hba.conf , mode: "0600", owner: postgres, group: postgres }
+    - { src: postgresql.conf.j2, dest: /var/lib/pgsql/data/postgresql.conf , mode: "0600", owner: postgres, group: postgres }
+
+- name: Set SELinux to permissive to allow PostgreSQL access
+  selinux:
+    policy: targeted
+    state: permissive
+
 - name: Ensure the PostgreSQL service is running
-  service: name=postgresql state=started enabled=yes
+  service: name=postgresql state=restarted enabled=yes

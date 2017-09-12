@@ -6,7 +6,7 @@ DocumentRoot "/opt/justus-backend"
 <VirtualHost *:8080>
   ServerName localhost
 
-  #ErrorLog /var/log/httpd/justus-backend.log
+  ErrorLog /var/log/httpd/justus-backend.log
 
   <Directory "/opt/justus-backend">
     <Limit GET HEAD POST PUT DELETE OPTIONS>

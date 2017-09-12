@@ -1,5 +1,8 @@
-- name: Install common packages
+- name: Install common dev tools for vagrant
   yum: 
     name: "{{ item }}"
     state: latest
   with_items:
+    - nano
+    - nmap
+  when: environment_id == "vagrant"
