@@ -65,6 +65,20 @@ if (array_key_exists("shib-group",$_SERVER)) {
     }
   }
 }
+
+/*
+ * Väliaikainen korjaus, koska authentikaatio ei toimi demo.justus.csc.fi koneella
+*/
+
+  if (gethostname() == 'demo.justus.csc.fi') {
+        $name = 'demo';
+        $mail = 'justus-palvelu@csc.fi';
+        $uid = 'e0000';
+        $domain = 'csc.fi';
+        $organization = '00000';
+        $justusrole = 'admin';
+  }
+
 ?>
   "name": "<?php print($name); ?>",
   "mail": "<?php print($mail); ?>",
