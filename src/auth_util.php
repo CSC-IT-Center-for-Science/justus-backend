@@ -90,12 +90,12 @@ function __construct() {
     */
 
     if (gethostname() == 'demo.justus.csc.fi') {
-        $name = 'demo';
-        $mail = 'justus-palvelu@csc.fi';
-        $uid = 'e0000';
-        $domain = 'csc.fi';
-        $organization = '00000';
-        $justusrole = 'admin';
+       $this->name = 'demo';
+       $this->mail = 'justus-palvelu@csc.fi';
+       $this->uid = 'e0000';
+       $this->domain = 'csc.fi';
+       $this->organization = '00000';
+       $this->justusrole = 'admin';
     }
 
 }
