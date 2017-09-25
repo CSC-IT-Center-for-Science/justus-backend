@@ -85,18 +85,6 @@ function __construct() {
     	}
     }
 
-    /*
-    *  Väliaikainen korjaus,  koska authentikaatio ei toimi demo.justus.csc.fi koneella
-    */
-
-    if (gethostname() == 'demo.justus.csc.fi') {
-       $this->name = 'demo';
-       $this->mail = 'justus-palvelu@csc.fi';
-       $this->uid = 'e0000';
-       $this->domain = 'csc.fi';
-       $this->organization = '00000';
-       $this->justusrole = 'admin';
-    }
 
 }
 } // class ends
