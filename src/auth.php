@@ -51,6 +51,7 @@ if (array_key_exists("shib-group",$_SERVER)) {
         '@tamk.fi' => '02630',
         '@novia.fi' => '10066',
         '@polamk.fi' => '02557',
+        '@poliisi.fi' => '02557',
         // tutkimusorganisaatio
         '@fmi.fi' => '4940015',
         // nb! mml has 2 domains
