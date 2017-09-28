@@ -65,6 +65,8 @@ if (array_key_exists("shib-group",$_SERVER)) {
     }
   }
 }
+
+
 ?>
   "name": "<?php print($name); ?>",
   "mail": "<?php print($mail); ?>",
