@@ -5,8 +5,8 @@
 
 - name: Install PostgreSQL
   yum: 
-    name: "{{ item }}-9.2.18-1.el7"
-    state: present
+    name: "{{ item }}"
+    state: latest
   with_items:
     - postgresql
     - postgresql-libs

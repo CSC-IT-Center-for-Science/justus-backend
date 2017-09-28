@@ -23,4 +23,8 @@ Vagrant.configure("2") do |config|
     ansible.provisioning_path = "/vagrant/ansible"
     ansible.verbose = "v"
   end
+  config.vm.provider "virtualbox" do |vbox|
+    vbox.memory = 2048
+    vbox.gui = false
+  end
 end
