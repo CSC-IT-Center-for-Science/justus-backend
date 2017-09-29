@@ -11,6 +11,10 @@ Vagrant.configure("2") do |config|
   config.vm.network :forwarded_port, guest: 5432, host: 5432, auto_correct: true
   config.vm.hostname = "justus-local"
 
+  # Centos/7 box does not include quest additions by default which are needed for folder live reloading
+  # https://github.com/dotless-de/vagrant-vbguest
+  config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+
   # Disable the new default behavior introduced in Vagrant 1.7, to
   # ensure that all Vagrant machines will use the same SSH key pair.
   # See https://github.com/mitchellh/vagrant/issues/5005
@@ -23,6 +27,7 @@ Vagrant.configure("2") do |config|
     ansible.provisioning_path = "/vagrant/ansible"
     ansible.verbose = "v"
   end
+
   config.vm.provider "virtualbox" do |vbox|
     vbox.memory = 2048
     vbox.gui = false

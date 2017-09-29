@@ -9,8 +9,14 @@
     src: "/vagrant/src" 
     path: "{{ backend_sync_path }}" 
     state: link
-    force: True
   when: environment_id == "vagrant"
+
+- name: "Copy source-files from host machine"
+  file: 
+    src: "/vagrant/src" 
+    path: "{{ backend_sync_path }}" 
+    state: directory
+  when: environment_id != "vagrant"
 
 - name: Copy Apache configuration files
   template: src={{ item.src }} dest={{ item.dest }} mode={{ item.mode }} owner={{ item.owner }} group={{ item.owner }}
