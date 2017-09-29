@@ -12,14 +12,6 @@
     force: True
   when: environment_id == "vagrant"
 
-- name: "Symlink source-files from host machine to provide live editing"
-  file: 
-    src: "/vagrant/src" 
-    path: "/var/www/html" 
-    state: link
-    force: True
-  when: environment_id == "vagrant"
-
 - name: Copy Apache configuration files
   template: src={{ item.src }} dest={{ item.dest }} mode={{ item.mode }} owner={{ item.owner }} group={{ item.owner }}
   with_items:

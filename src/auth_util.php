@@ -83,6 +83,15 @@
 					}
 				}
 			}
+
+			if (gethostname() == 'justus-local') {		
+				$this->name = 'demo';		
+				$this->mail = 'justus-palvelu@csc.fi';		
+				$this->uid = 'e0000';		
+				$this->domain = 'csc.fi';		
+				$this->organization = '00000';		
+				$this->justusrole = 'admin';		
+			}
 		}
 	} // class ends
 ?>
