@@ -40,7 +40,7 @@
 
 					// a role for organizational admin
 					// - do we need group name from here?
-					if ($justusrole!="owner" && preg_match("/justus#([^;]*)-admins/",$groups[$i])==1) {
+					if ($this->justusrole!="owner" && preg_match("/justus#([^;]*)-admins/",$groups[$i])==1) {
 						$this->justusrole = "admin";
 					}
 

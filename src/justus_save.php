@@ -67,7 +67,7 @@
 
   $has_access = False;
 
-  if ($p_role == 'admin') {
+  if ($p_role == 'owner') {
     $has_access = True;
   }
   else {
@@ -195,7 +195,7 @@
   if ($has_access) {
     switch ($method) {
       case 'GET':
-        if ($p_role != 'admin') {
+        if ($p_role != 'owner') {
           if ($table == 'julkaisu') {
             $sql = "select j.* from \"$table\" j WHERE j.organisaatiotunnus = '$p_org'";
             if ($key) {
