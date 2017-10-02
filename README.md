@@ -9,7 +9,23 @@
       |_.__/\__,_\__|_\_\___|_||_\__,_|   
             :: JUSTUS backend ::          
 
+## Getting started
+
+### Prequisities
+* Ansible v2.1+
+* Vagrant (tested with v1.9+)
+* VirtualBox (tested with v5.1+)
+
+### Development
+To create the development environment clone the repository, install prequisities and run:
+
+```vagrant up```
+
+This will install and configure everything but Shibboleth and create certificates which is enough for local development.
+After the provision finishes the api is listening at http://10.10.10.10:8080/api
+
 ## Requirements
+Requirements for a full production environment is listed here.
 
 ### Server side
 
@@ -111,3 +127,8 @@ Preparations for application
 * Start
 
   `systemctl start shibd`
+
+## Known issues
+* The current centos/7 vagrant box does not support syncing folders from the host machine. Either make changes directly to the files inside the machine or run vagrant reload to sync changes manually.
+
+* Shibboleth and certificates are not installed for the dev environment. This might be later added to provide a similar environment as in production.
