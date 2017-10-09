@@ -77,7 +77,7 @@
 
 						$this->organization = $domorgmap[$domain];
 
-						if ($justusrole!="owner" && $justusrole!="admin" && $organization) {
+						if ($this->justusrole!="owner" && $this->justusrole!="admin" && $this->organization) {
 							$this->justusrole = "member";
 						}
 					}
