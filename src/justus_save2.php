@@ -405,7 +405,7 @@ switch ($method) {
     }
     else if ($table == 'avainsana') {
          $sql = "select a.* from \"$table\" a INNER JOIN julkaisu as j on j.id = a.julkaisuid  inner join kaytto_loki as kl on j.accessid = kl.id WHERE j.organisaatiotunnus = '$p_org'"
-		 .($p_role == 'admin' ? '' :  " and kluid = '$p_uid'");
+		 .($p_role == 'admin' ? '' :  " and kl.uid = '$p_uid'");
          if ($key) {
             $sql.= " AND a.$col=$1";
             $params=array($key);
