@@ -280,7 +280,7 @@ require 'auth_util.php';
 		     http_response_code(403);
                      die(pg_last_notice($dbconn));
 	        }
-		error_log($sql);
+
 	        $result = pg_query($dbconn, $sql);
 		$t_data = pg_fetch_object($result);
 		$julk_id = $t_data->id;
@@ -543,10 +543,10 @@ switch ($method) {
 
 
 /*
- * Update access history nesecary 
+ * Update access rights and modifications log if necessary 
  */ 
 
-  if ($julk_id > 0 || $p_role == 'owner')  {
+  if ($julk_id > 0 || ($p_role == 'owner' && $method != 'GET'))  {
 	
 	$sql = "insert into \"kaytto_loki\" (name, mail, uid, julkaisu, organization, role, itable, action, data) values" 
 		." ($1,$2,$3,$4,$5,$6,$7,$8,$9) returning id";
