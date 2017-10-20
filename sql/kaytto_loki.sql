@@ -16,13 +16,13 @@ CREATE TABLE kaytto_loki (
     name character varying(100),
     mail character varying(100),
     uid character varying(50),
-    domain character varying(50),
+    julkaisu bigint,
     organization character varying(100),
     role character varying(50),
     itable character varying(100),
     action character varying(10),
     data json,
-    luonti_pvm timestamp without time zone
+    luonti_pvm timestamptz
 );
 
 
