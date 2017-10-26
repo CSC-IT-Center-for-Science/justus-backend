@@ -10,5 +10,5 @@ END;
 $$
 LANGUAGE 'plpgsql';
 
-grant execute on function kaytto_loki_insert to appaccount;
+grant execute on function kaytto_loki_insert() to appaccount;
 
