@@ -387,7 +387,6 @@ require 'auth_util.php';
 
 // create SQL based on HTTP method
 $params = array();
-$results_id = array();
 
 if ($has_access) {
 
@@ -517,8 +516,7 @@ switch ($method) {
 		$julk_id =  pg_fetch_object($result)->id;
 	   }
 
-	   array_push($results_id, $julk_id);
-	   error_log(print_r($results_id));
+	   error_log(print_r($julk_id));
        }
    
 
