@@ -1,3 +1,5 @@
 sql_files_to_execute:
   - tables.sql
   - view-uijulkaisut.sql
+  - fx_kaytto_loki_insert.sql  
+  - kaytto_loki.sql
