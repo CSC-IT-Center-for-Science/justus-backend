@@ -127,6 +127,7 @@ require 'auth_util.php';
   }
   
   $julk_id = 0;
+  $result_id = array(); 
 
 /*
  *  POST (insert) information can be added to only one publicatiob per request
@@ -200,7 +201,17 @@ require 'auth_util.php';
  */ 
 
   if ($method == 'PUT') {
-	if ($table == 'julkaisu') {
+	if ($table == 'julkaisu' && $key > 0) {
+	    
+	    // check whether information exists or not
+            $sql = "select count(id) as lkm from \"$table\" where id = $key";
+            $result = pg_query($dbconn, $sql);
+            if (!pg_fetch_object($result)->lkm){
+            	http_response_code(204);
+              	die(pg_last_notice($dbconn));
+            }
+
+	    // check if request has an access
             $rm_id = array_search('organisaatiotunnus', $columns);
             $t_org = $all_values[0][$rm_id];
             if ($p_org == $t_org) {
@@ -223,11 +234,31 @@ require 'auth_util.php';
 
 	if ($table == 'avainsana' || $table == 'tieteenala' || $table == 'organisaatiotekija') {
 		if ($col == 'julkaisuid' && $key > 0) {
+
+                     // check whether information exists or not
+		     $sql = "select count(id) as lkm from \"$table\" where julkaisuid = $key";
+            	     $result = pg_query($dbconn, $sql);
+                     if (!pg_fetch_object($result)->lkm){
+                     	http_response_code(204);
+                	die(pg_last_notice($dbconn));
+		     }
+
+		     // check if request has an access
 	    	     $sql = "select j.id from julkaisu j inner join kaytto_loki as kl on j.accessid = kl.id  where j.id = $key"
 		    	  ." and organisaatiotunnus = '$p_org'"
 		          .($p_role == 'admin' ? '' :  " and kl.uid = '$p_uid'");
 		}
 		else if ($col == 'id' && $key > 0) {
+
+		      // check whether information exists or not
+		     $sql = "select count(id) as lkm from \"$table\" where id = $key";
+                     $result = pg_query($dbconn, $sql);
+                     if (!pg_fetch_object($result)->lkm){
+                        http_response_code(204);
+                        die(pg_last_notice($dbconn));
+                     }
+
+                    // check if request has an access
                     $sql = "select x.id from julkaisu x"
 		           ." inner join \"$table\" as y on y.julkaisuid = x.id"
                            ." inner join kaytto_loki as kl on x.accessid = kl.id"
@@ -260,6 +291,16 @@ require 'auth_util.php';
 
 	if ($table == 'alayksikko') {
 		if ($col == 'organisaatiotekijaid' && $key > 0) {
+                  
+                      // check whether information exists or not
+		     $sql = "select count(id) as lkm from \"$table\" where organisaatiotekijaid = $key";
+                     $result = pg_query($dbconn, $sql);
+                     if (!pg_fetch_object($result)->lkm){
+                        http_response_code(204);
+                        die(pg_last_notice($dbconn));
+                     }
+
+		     // check if request has an access
 	             $sql = "select j.id, ot.id as orgtekid from organisaatiotekija ot inner join julkaisu as j on ot.julkaisuid = j.id"
 			   ."  inner join kaytto_loki as kl on j.accessid = kl.id"
 		           ."  where ot.id = $key and j.organisaatiotunnus = '$p_org'"
@@ -267,9 +308,20 @@ require 'auth_util.php';
 
 		 }
                 else if ($col == 'id' && $key > 0) {
+		     
+                     // check whether information exists or not
+		     $sql = "select count(id) as lkm from \"$table\" where id = $key";
+                     $result = pg_query($dbconn, $sql);
+                     if (!pg_fetch_object($result)->lkm){
+                        http_response_code(204);
+                        die(pg_last_notice($dbconn));
+                     }
+
+                     
+                     // check if request has an access
 		     $sql = "select j.id, ot.id as orgtekid from organisaatiotekija ot" 
 			       ." inner join julkaisu as j on ot.julkaisuid = j.id"
-                               ."  inner join kaytto_loki as kl on j.accessid = kl.id"
+                               ." inner join kaytto_loki as kl on j.accessid = kl.id"
 			       ." inner join alayksikko as a on a.organisaatiotekijaid = ot.id "
                                ." where j.organisaatiotunnus = '$p_org'"
 			       ." and a.id = $key"
@@ -328,13 +380,33 @@ require 'auth_util.php';
 
 	if ($table == 'avainsana' || $table == 'tieteenala' || $table == 'organisaatiotekija') {
 	    if ($col == "julkaisuid" && $key > 0) {
+
+                 // check whether information exists or not
+		 $sql = "select count(id) as lkm from \"$table\" where julkaisuid = $key";
+                 $result = pg_query($dbconn, $sql);
+                 if (!pg_fetch_object($result)->lkm){
+                        http_response_code(204);
+                        die(pg_last_notice($dbconn));
+                }
+
+                 // check if request has an access
 	         $sql = "select x.id from julkaisu x" 
-			  ." inner join \"$table\" as y on y.julkaisuid = x.id"
+			  #." inner join \"$table\" as y on y.julkaisuid = x.id"
                           ." inner join kaytto_loki as kl on x.accessid = kl.id"
 			  ." where x.id = $key and x.organisaatiotunnus = '$p_org'"
 		          .($p_role == 'admin' ? '' :  " and kl.uid = '$p_uid'");
 	    }
 	    else if ($col == 'id' && $key > 0) {
+
+                  // check whether information exists or not
+		 $sql = "select count(id) as lkm from \"$table\" where id = $key";
+		 $result = pg_query($dbconn, $sql);
+                 if (!pg_fetch_object($result)->lkm){
+        		http_response_code(204);
+        		die(pg_last_notice($dbconn));
+     		}
+
+		 // check if request has an access
 		 $sql = "select x.id from julkaisu x"
 			." inner join \"$table\" y on y.julkaisuid = x.id" 
                         ."  inner join kaytto_loki as kl on x.accessid = kl.id"
@@ -356,16 +428,36 @@ require 'auth_util.php';
 	}
       
 	if ($table == 'alayksikko') {
-            if ($col == "julkaisuid" && $key > 0) {
+            if ($col == "organisaatiotekijaid" && $key > 0) {
+
+	        // check whether information exists or not	
+		$sql = "select count(id) as lkm from \"$table\" where organisaatiotekijaid = $key";
+                 	$result = pg_query($dbconn, $sql);
+                 	if (!pg_fetch_object($result)->lkm){
+                            http_response_code(204);
+                            die(pg_last_notice($dbconn));
+                	}
+
+                // check if request has an access
 	     	$sql = "select j.id from organisaatiotekija ot"
                         ." inner join julkaisu as j on ot.julkaisuid = j.id"
                         ." inner join kaytto_loki as kl on j.accessid = kl.id"
-                        ." inner join alayksikko as a on a.organisaatiotekijaid = ot.id"
-		        ." where a.id = $key"
+                        # ." inner join alayksikko as a on a.organisaatiotekijaid = ot.id"
+		        ." where ot.id = $key"
 		        ." and j.organisaatiotunnus = '$p_org'"
 			.($p_role == 'admin' ? '' :  " and kl.uid = '$p_uid'");
 		}
 		else if ($col == 'id' && $key > 0) {
+
+                     // check whether information exists or not
+		     $sql = "select count(id) as lkm from \"$table\" where id = $key";
+                     $result = pg_query($dbconn, $sql);
+                     if (!pg_fetch_object($result)->lkm){
+                      	http_response_code(204);
+                      	die(pg_last_notice($dbconn));
+                     }
+
+                     // check if request has an access
 		     $sql = "select j.id from alayksikko a"
 				." inner join organisaatiotekija as ot on ot.id = a.organisaatiotekijaid"
 				." inner join julkaisu as j on ot.julkaisuid = j.id"
@@ -374,8 +466,9 @@ require 'auth_util.php';
 				." and j.organisaatiotunnus = '$p_org'"
 				.($p_role == 'admin' ? '' :  " and kl.uid = '$p_uid'");
 
-			
-            # error_log($sql);
+	    	}
+		
+            error_log($sql);
 	    $result = pg_query($dbconn, $sql);
 	    $julk_id = pg_fetch_object($result)->id;
             if ($julk_id > 0) {
@@ -383,7 +476,7 @@ require 'auth_util.php';
             }
 	}
   }
- }
+ 
 
 // create SQL based on HTTP method
 $params = array();
@@ -480,15 +573,21 @@ switch ($method) {
              $params=array_merge(array($key),$all_values[$x]);
              $sql.= " where $col=$1";
 
-	    
 	     // excecute SQL statement
 	     $result = pg_query_params($dbconn,$sql,$params);
+             
+              // No affected rows
+             if (pg_affected_rows($result) == 0){
+             	  http_response_code(204);
+                  die(pg_last_notice($dbconn));
+             }
 
 	     // die if SQL statement failed
 	     if (!$result) {
-  	           http_response_code(404);
-  	           die(pg_last_notice($dbconn));
-	      }
+  	          http_response_code(404);
+  	          die(pg_last_notice($dbconn));
+	     }
+
         }
 
   break;
@@ -507,16 +606,24 @@ switch ($method) {
             // excecute SQL statement
             $result = pg_query_params($dbconn,$sql,$params);
 	   // die if SQL statement failed
+
+	   // No affected rows
+	   if (pg_affected_rows($result) == 0){
+           	http_response_code(204);
+        	die(pg_last_notice($dbconn));
+     	   }
+
            if (!$result) {
-               http_response_code(404);
-               die(pg_last_notice($dbconn));
+                http_response_code(404);
+                die(pg_last_notice($dbconn));
            }
 
 	   if ($julk_id == 0 && $table == 'julkaisu') {
 		$julk_id =  pg_fetch_object($result)->id;
 	   }
 
-	   error_log(print_r($julk_id));
+          array_push($result_id, pg_fetch_object($result)->id); 
+
        }
    
 
@@ -529,6 +636,11 @@ switch ($method) {
      
      // excecute SQL statement
      $result = pg_query_params($dbconn,$sql,$params);
+
+     if (pg_affected_rows($result) == 0){
+	http_response_code(204);
+	die(pg_last_notice($dbconn));
+     }
 
      // die if SQL statement failed
      if (!$result) {
@@ -597,6 +709,7 @@ if ($method == 'GET') {
      else {
        echo $result_id[0];
      }
+
 
 } else {
   echo pg_affected_rows($result);
