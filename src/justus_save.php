@@ -618,13 +618,15 @@ switch ($method) {
                 die(pg_last_notice($dbconn));
            }
 
+
 	   if ($julk_id == 0 && $table == 'julkaisu') {
-		$julk_id =  pg_fetch_object($result)->id;
-	   }
-
-          array_push($result_id, pg_fetch_object($result)->id); 
-
-       }
+	   	$julk_id =  pg_fetch_object($result)->id;
+	        array_push($result_id, $julk_id);
+	        }
+                else {
+	             array_push($result_id, pg_fetch_object($result)->id);
+	        }   
+    }
    
 
     break;
