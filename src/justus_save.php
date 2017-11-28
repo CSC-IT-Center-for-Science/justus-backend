@@ -112,6 +112,9 @@ require 'auth_util.php';
   $p_mail = $org_chk->mail;
   $p_domain = $org_chk->domain;
   $p_name = $org_chk->name;
+  $julk_id = 0;
+  $result_id = array(); 
+
 
   $has_access = False;
 
@@ -126,8 +129,6 @@ require 'auth_util.php';
        $has_access = True;
   }
   
-  $julk_id = 0;
-  $result_id = array(); 
 
 /*
  *  POST (insert) information can be added to only one publicatiob per request
