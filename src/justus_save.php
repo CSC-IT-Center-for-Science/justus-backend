@@ -3,7 +3,6 @@ require 'http_response_code.php';
 require 'auth_util.php';
 
 
-
   $headers = array();
   $headers[]='Access-Control-Allow-Headers: Content-Type';
   $headers[]='Access-Control-Allow-Methods: OPTIONS, GET, PUT, POST, DELETE';
