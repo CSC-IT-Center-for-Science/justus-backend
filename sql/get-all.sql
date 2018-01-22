@@ -18,7 +18,7 @@
 ,array_to_json((
   select array_agg(r)
   from (
-    select etunimet,sukunimi,orcid
+    select etunimet,sukunimi,orcid,rooli
     ,array_to_json((
       select array_agg(rr.alayksikko)
       from (
