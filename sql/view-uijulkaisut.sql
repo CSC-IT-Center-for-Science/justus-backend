@@ -25,7 +25,8 @@ CREATE OR REPLACE VIEW uijulkaisut AS
             ( SELECT array_to_json(array_agg(( SELECT t.*::record AS t
                            FROM ( SELECT organisaatiotekija.etunimet, 
                                     organisaatiotekija.sukunimi, 
-                                    organisaatiotekija.orcid, 
+                                    organisaatiotekija.orcid,
+                                    organisaatiotekija.rooli, 
                                     ( SELECT array_to_json(array_agg(alayksikko.alayksikko)) AS array_to_json
                                            FROM alayksikko
                                           WHERE alayksikko.organisaatiotekijaid = organisaatiotekija.id) AS alayksikot) t))) AS array_to_json
