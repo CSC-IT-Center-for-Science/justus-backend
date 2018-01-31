@@ -90,6 +90,28 @@ WITH (
 ALTER TABLE tieteenala
   OWNER TO appaccount;
 
+  
+-- Table: taiteenala
+
+-- DROP TABLE taiteenala;  
+  
+CREATE TABLE taiteenala
+(
+  id bigserial NOT NULL,
+  julkaisuid bigint NOT NULL,
+  taiteenalakoodi text NOT NULL,
+  jnro integer,
+  CONSTRAINT taiteenala_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_julkaisu FOREIGN KEY (julkaisuid)
+      REFERENCES julkaisu (id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE taiteenala
+OWNER TO appaccount;
+  
 
 -- Table: organisaatiotekija
 
@@ -134,3 +156,46 @@ WITH (
 );
 ALTER TABLE alayksikko
   OWNER TO appaccount;
+  
+ 
+-- Table: lisatieto
+
+-- DROP TABLE lisatieto; 
+  
+CREATE TABLE lisatieto
+(
+  id bigserial NOT NULL,
+  julkaisuid bigint NOT NULL,
+  lisatietotyyppi text NOT NULL,
+  lisatietoteksti text NOT NULL,
+  CONSTRAINT lisatieto_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_julkaisu FOREIGN KEY (julkaisuid)
+      REFERENCES julkaisu (id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE lisatieto
+OWNER TO appaccount;
+
+
+-- Table: taidealantyyppikategoria
+
+-- DROP TABLE taidealantyyppikategoria; 
+
+CREATE TABLE taidealantyyppikategoria
+(
+  id bigserial NOT NULL,
+  julkaisuid bigint NOT NULL,
+  tyyppikategoria integer,
+  CONSTRAINT taidealantyyppikategoria_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_julkaisu FOREIGN KEY (julkaisuid)
+      REFERENCES julkaisu (id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE taidealantyyppikategoria
+OWNER TO appaccount;
