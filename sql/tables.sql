@@ -166,7 +166,7 @@ CREATE TABLE lisatieto
 (
   id bigserial NOT NULL,
   julkaisuid bigint NOT NULL,
-  lisatietotyyppi text NOT NULL,
+  lisatietotyyppi text,
   lisatietoteksti text NOT NULL,
   CONSTRAINT lisatieto_pkey PRIMARY KEY (id),
   CONSTRAINT fk_julkaisu FOREIGN KEY (julkaisuid)
