@@ -102,7 +102,7 @@ require 'auth_util.php';
  * Acess right user/group/method checks based on a shibboleth attributes
  */
 
-  $p_org = "";
+$p_org = "";
   $p_role = "";
   $org_chk = new justus_auth();
   $p_org = $org_chk->organization;
@@ -112,13 +112,13 @@ require 'auth_util.php';
   $p_domain = $org_chk->domain;
   $p_name = $org_chk->name;
   $julk_id = 0;
-  $result_id = array(); 
+$result_id = array(); 
 
 
   $has_access = False;
 
   if ($p_role == 'owner') {
-      if (($table == 'julkaisu' && $method != 'DELETE') || $table == 'avainsana' || $table == 'tieteenala' || $table == 'organisaatiotekija' || $table == 'alayksikko' || $table == 'uijulkaisu') {
+      if (($table == 'julkaisu' && $method != 'DELETE') || $table == 'avainsana' || $table == 'tieteenala' || $table == 'taiteenala' || $table == 'lisatieto' || $table == 'taidealantyyppikategoria' || $table == 'organisaatiotekija' || $table == 'alayksikko' || $table == 'uijulkaisu') {
 	 $has_access = True;
       }
   }
@@ -149,7 +149,7 @@ require 'auth_util.php';
 
 	}
 
-	if ($table == 'avainsana' || $table == 'tieteenala' || $table == 'organisaatiotekija') {
+	if ($table == 'avainsana' || $table == 'tieteenala' || $table == 'organisaatiotekija' || $table == 'taiteenala' || $table == 'lisatieto' || $table == 'taidealantyyppikategoria') {
 		if (in_array("julkaisuid", $columns)) {
 		     $rmid = array_search('julkaisuid', $columns);
 		     (int)$tmp_id = $all_values[0][$rmid];
@@ -232,7 +232,7 @@ require 'auth_util.php';
 
         }
 
-	if ($table == 'avainsana' || $table == 'tieteenala' || $table == 'organisaatiotekija') {
+	if ($table == 'avainsana' || $table == 'tieteenala' || $table == 'organisaatiotekija' || $table == 'taiteenala' || $table == 'lisatieto' || $table == 'taidealantyyppikategoria') {
 		if ($col == 'julkaisuid' && $key > 0) {
 
                      // check whether information exists or not
@@ -378,7 +378,7 @@ require 'auth_util.php';
 
 	}
 
-	if ($table == 'avainsana' || $table == 'tieteenala' || $table == 'organisaatiotekija') {
+	if ($table == 'avainsana' || $table == 'tieteenala' || $table == 'organisaatiotekija' || $table == 'taiteenala' || $table == 'lisatieto' || $table == 'taidealantyyppikategoria') {
 	    if ($col == "julkaisuid" && $key > 0) {
 
                  // check whether information exists or not
@@ -531,6 +531,33 @@ switch ($method) {
        }
 	error_log($sql);	
     }
+    else if ($table == 'taiteenala') {
+        $sql = "select a.* from \"$table\" a INNER JOIN julkaisu as j on j.id = a.julkaisuid inner join kaytto_loki as kl on j.accessid = kl.id WHERE j.organisaatiotunnus = '$p_org'"
+		.($p_role == 'admin' ? '' :  " and kl.uid = '$p_uid'");
+        if ($key) {
+            $sql.= " AND a.$col=$1";
+            $params=array($key);
+       }
+	error_log($sql);	
+    }
+    else if ($table == 'lisatieto') {
+        $sql = "select a.* from \"$table\" a INNER JOIN julkaisu as j on j.id = a.julkaisuid inner join kaytto_loki as kl on j.accessid = kl.id WHERE j.organisaatiotunnus = '$p_org'"
+		.($p_role == 'admin' ? '' :  " and kl.uid = '$p_uid'");
+        if ($key) {
+            $sql.= " AND a.$col=$1";
+            $params=array($key);
+       }
+	error_log($sql);	
+    }	
+    else if ($table == 'taidealantyyppikategoria') {
+        $sql = "select a.* from \"$table\" a INNER JOIN julkaisu as j on j.id = a.julkaisuid inner join kaytto_loki as kl on j.accessid = kl.id WHERE j.organisaatiotunnus = '$p_org'"
+		.($p_role == 'admin' ? '' :  " and kl.uid = '$p_uid'");
+        if ($key) {
+            $sql.= " AND a.$col=$1";
+            $params=array($key);
+       }
+	error_log($sql);	
+    }	
     else if ($table == 'uijulkaisut') {
         $sql = "select a.* from \"$table\" a INNER JOIN julkaisu as j on j.id = a.id inner join kaytto_loki as kl on j.accessid = kl.id WHERE j.organisaatiotunnus = '$p_org'"
 		 .($p_role == 'admin' ? '' :  " and kl.uid = '$p_uid'");
