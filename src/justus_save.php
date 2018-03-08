@@ -423,10 +423,8 @@ $result_id = array();
 		 $julk_id = pg_fetch_object($result)->id;
                  if ($julk_id > 0) {
 		       $has_access = True;
-		 }
-	    }
-	}
-      
+				}
+			}
 	if ($table == 'alayksikko') {
             if ($col == "organisaatiotekijaid" && $key > 0) {
 
@@ -474,10 +472,9 @@ $result_id = array();
             if ($julk_id > 0) {
                 $has_access = True;
             }
+		}
 	}
   }
- 
-
 // create SQL based on HTTP method
 $params = array();
 
