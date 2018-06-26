@@ -62,17 +62,20 @@
 							'@lamk.fi' => '02470',
 							'@laurea.fi' => '02629',
 							'@metropolia.fi' => '10065',
-                                                        '@mil.fi' => '02358', 
+														'@mil.fi' => '02358', 
+							'@oamk.fi' => '02471',							
 							'@samk.fi' => '02507',
                                                         '@savonia.fi' => '02537', 
 							'@seamk.fi' => '02472',
 							'@tamk.fi' => '02630',
                                                         '@turkuamk.fi' => '02509',
 							'@novia.fi' => '10066',
+							'@uniarts.fi' => '10103',
 							'@polamk.fi' => '02557',
 							'@poliisi.fi' => '02557',
 							// tutkimusorganisaatio
 							'@fmi.fi' => '4940015',
+							'@luke.fi' => '4100010',
 							// nb! mml has 2 domains
 							'@nls.fi' => '4020217', '@maanmittauslaitos.fi' => '4020217',
 							// nb! unknown organization for admin org
