@@ -62,7 +62,7 @@
 							'@lamk.fi' => '02470',
 							'@laurea.fi' => '02629',
 							'@metropolia.fi' => '10065',
-														'@mil.fi' => '02358', 
+							'@mil.fi' => '02358', 
 							'@oamk.fi' => '02471',							
 							'@samk.fi' => '02507',
                                                         '@savonia.fi' => '02537', 
