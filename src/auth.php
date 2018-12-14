@@ -52,7 +52,7 @@ if (array_key_exists("shib-group",$_SERVER)) {
         '@samk.fi' => '02507',
         '@savonia.fi' => '02537',
         '@seamk.fi' => '02472',
-        '@tamk.fi' => '02630',
+        '@tamk.fi' => '02630', '@tuni.fi' => '02630',
         '@turkuamk.fi' => '02509',
         '@novia.fi' => '10066',
         '@uniarts.fi' => '10103',
